@@ -1,14 +1,12 @@
-# =========================
-# CLASSE STUDENTE
-# =========================
+from Utente import Utente 
 
-class Studente:
-    def __init__(self, nome, corso):
-        self.nome = nome
+FILE_STUDENTI = "studenti.csv"
+
+class Studente(Utente):
+
+    def init(self, nome, password, corso):
+        super().__init__(nome, password, corso)
         self.corso = corso
 
-    def to_list(self):
-        return [self.nome, self.corso]
-
-    def __str__(self):
-        return f"Nome: {self.nome} - Corso: {self.corso}"
+    def modificaCorso(self, nuovo_corso):
+        self.corso = nuovo_corso

@@ -1,47 +1,33 @@
-import os
-#import csv
+from Utente import Utente 
 
-from gestione_Utente import Utente
-# =========================
-# CLASSE ADMIN 
-# =========================
+import datetime
 
 class Admin(Utente):
-    def __init__(self):
-        super().__init__("admin", "admin123")
 
-    def menu(self):
+    def init(self, nome, corso):
+        super().__init__("admin", "root")
+
+    def menuAdmin(self):
         while True:
-            print("\n1. Aggiungi Studente")
-            print("2. Modifica Studente")
-            print("3. Stampa Aula")
-            print("4. Reset Lista Studenti")
-            print("5. Logout")
+            print("Menu Admin")
+            print("0. Logout")
+            print("1. Reset Studenti")
 
             scelta = input("Scelta: ")
 
-            if scelta == "1":
-                self.aggiungi_studente()
-            elif scelta == "2":
-                self.modifica_studente()
-            elif scelta == "3":
-                self.stampa_aula()
-            elif scelta == "4":
-                self.reset_lista()
-            elif scelta == "5":
-                break
-            else:
-                print("Scelta non valida.")
+            match scelta:
+                case "0":
+                    break
+                case "1":
+                    self.resetStudenti("studenti.csv", "intervento_utente.txt")
+                case _:
+                    print("Scelta non valida.")
 
-    def reset_lista(self):
-        motivo = input("Inserisci motivazione reset: ")
 
-        # w = cancella tutto
-        with open("studenti.csv", "w", newline=""):
+    def resetStudenti(self, file_studenti, file_intervento):
+        motivazione = input("Inserisci motivazione del reset: ")
+        with open(file_studenti, "w", newline=""): # w = cancella tutto
             pass
-
-        # a = aggiunge al log
-        with open("intervento_utente.txt", "a") as log:
-            log.write(f"Reset effettuato da ADMIN. Motivo: {motivo}\n")
-
-        print("Lista studenti resettata.")
+        with open(file_intervento, "a") as log: # a = aggiunge al log
+            log.write(datetime.now(), "- Reset Admin - Motivo:", motivazione, "\n")
+        print("Lista studenti resettata con successo.")
