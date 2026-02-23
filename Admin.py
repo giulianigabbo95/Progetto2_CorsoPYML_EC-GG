@@ -1,16 +1,47 @@
-from Utente import Utente 
+import os
+#import csv
 
-import datetime
+from gestione_Utente import Utente
+# =========================
+# CLASSE ADMIN 
+# =========================
 
 class Admin(Utente):
-    
-    def init(self, nome, corso):
-        super().__init__("admin", "root")
+    def __init__(self):
+        super().__init__("admin", "admin123")
 
+    def menu(self):
+        while True:
+            print("\n1. Aggiungi Studente")
+            print("2. Modifica Studente")
+            print("3. Stampa Aula")
+            print("4. Reset Lista Studenti")
+            print("5. Logout")
 
-    def resetStudenti(self, file_studenti, file_intervento):
-        motivazione = input("Inserisci motivazione del reset: ")
-        open(file_studenti, "w").close()
-        with open(file_intervento, "a") as file:
-            file.write(datetime.now(), "- Reset Admin - Motivo:", motivazione, "\n")
-        print("Lista studenti resettata con successo.")
+            scelta = input("Scelta: ")
+
+            if scelta == "1":
+                self.aggiungi_studente()
+            elif scelta == "2":
+                self.modifica_studente()
+            elif scelta == "3":
+                self.stampa_aula()
+            elif scelta == "4":
+                self.reset_lista()
+            elif scelta == "5":
+                break
+            else:
+                print("Scelta non valida.")
+
+    def reset_lista(self):
+        motivo = input("Inserisci motivazione reset: ")
+
+        # w = cancella tutto
+        with open("studenti.csv", "w", newline=""):
+            pass
+
+        # a = aggiunge al log
+        with open("intervento_utente.txt", "a") as log:
+            log.write(f"Reset effettuato da ADMIN. Motivo: {motivo}\n")
+
+        print("Lista studenti resettata.")
