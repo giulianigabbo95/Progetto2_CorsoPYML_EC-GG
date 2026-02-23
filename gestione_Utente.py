@@ -43,7 +43,7 @@ class Utente:
         studente = Studente(nome, corso)
         file_path = os.path.join(os.path.dirname(__file__), "studenti.csv")
 
-        # scrittura semplice come testo
+        
         with open(file_path, "a", encoding="utf-8") as f:
             f.write(f"{studente.nome},{studente.corso}\n")
 
@@ -57,6 +57,7 @@ class Utente:
         if not os.path.exists(file_path):
             print("Nessun file studenti presente.")
             return
+
 
         studenti = []
         with open(file_path, "r", encoding="utf-8") as f:
@@ -91,6 +92,7 @@ class Utente:
             print("Nessuno studente presente.")
             return
 
+        #legge file studenti.csv e salva in lista poi alla fine stampa
         studenti = []
         with open(file_path, "r", encoding="utf-8") as f:
             for riga in f:
