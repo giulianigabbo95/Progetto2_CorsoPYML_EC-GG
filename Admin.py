@@ -2,6 +2,9 @@ from Utente import Utente
 
 import datetime
 
+FILE_STUDENTI = "studenti.csv"
+FILE_INTERVENTO = "intervento_utente.txt"
+
 class Admin(Utente):
 
     def init(self, nome, corso):
@@ -19,7 +22,7 @@ class Admin(Utente):
                 case "0":
                     break
                 case "1":
-                    self.resetStudenti("studenti.csv", "intervento_utente.txt")
+                    self.resetStudenti(FILE_STUDENTI, FILE_INTERVENTO)
                 case _:
                     print("Scelta non valida.")
 

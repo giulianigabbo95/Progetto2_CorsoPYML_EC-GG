@@ -28,53 +28,40 @@ Realizzare un programma che gestisca un file denominato studenti.txt e che imple
         - Ha la possibilità di resettare completamente la lista degli studenti.
         - Ogni intervento di reset deve essere accompagnato da una motivazione, che verrà salvata nel file intervento_utente.txt.
 '''
-
 from Utente import Utente
-from Studente import Studente
-from Admin import Admin
 
 FILE_CREDENZIALI = "credenziali.txt"
 FILE_STUDENTI = "studenti.csv"
-FILE_INTERVENTO = "intervento_utente.txt"
 
-
+# MAIN
 while True:
-        print("1. Registrazione")
-        print("2. Login")
-        print("0. Esci")
+    print("1. Registrazione")
+    print("2. Login")
+    print("0. Esci")
 
-        scelta = input("Scelta: ")
+    scelta = input("Scelta: ")
 
-        match scelta:
-            case "1":
-                registrazioneUtente()
-            case "2":
-                while True:
-                    print("1. Aggiungi studente")
-                    print("2. Modifica studente")
-                    print("3. Stampa aula")
-                    if isinstance(utente, Admin):
-                        print("4. Reset lista studenti")
-                    print("0. Logout")
-
-                    scelta = input("Scelta: ")
-
-                    match scelta:
-                        case "1":
-                            aggiungiStudente()
-                        case "2":
-                            modificaStudente()
-                        case "3":
-                            stampaAula()
-                        case "4":
-                            utente.resetStudenti(FILE_STUDENTI, FILE_INTERVENTO)
-                        case "0":
-                            print("Scelta non valida.")
-                            break
-                        case _:
-                            print("Riprova!")
-            case "0":
-                break
-            case _:
-                print("Scelta non valida.")
+    match scelta:
+        case "1":
+            new_user_nome = input("Inserisci Nome: ")
+            new_user_pass = input("Inserisci Password: ")
+            new_user = Utente(new_user_nome, new_user_pass)
+            if new_user.registraUtente(FILE_CREDENZIALI):
+                print("Utente Registrato!")
+                new_user.menuUtente()
+            else:
+                print("Utente NON registrato!")
+        case "2":
+            old_user_nome = input("Inserisci Nome: ")
+            old_user_pass = input("Inserisci Password: ")
+            old_user = Utente(old_user_nome, old_user_pass)
+            if old_user.loginUtente(FILE_CREDENZIALI) == True:
+                print("Accesso effettuato!")
+                old_user.menuUtente()
+            else:
+                print("Accesso Fallito!")
+        case "0":
+            break
+        case _:
+            print("Scelta non valida.")
 

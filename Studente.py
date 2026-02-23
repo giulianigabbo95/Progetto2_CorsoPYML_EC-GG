@@ -10,3 +10,6 @@ class Studente(Utente):
 
     def modificaCorso(self, nuovo_corso):
         self.corso = nuovo_corso
+
+    def listaStudenti(self):
+        return [self.nome, self.corso]
