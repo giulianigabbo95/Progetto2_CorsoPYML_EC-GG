@@ -1,23 +1,24 @@
 # =========================
 # CLASSE UTENTE
 # =========================
-import Studente
 import os
-import csv
+from gestione_Studente import Studente  # Studente deve avere to_list() e __str__()
 
 class Utente:
     def __init__(self, nome, password):
         self.nome = nome
         self.password = password
 
+    # MENU PRINCIPALE
     def menu(self):
         while True:
-            print("\n1. Aggiungi Studente")
+            print("\n--- MENU UTENTE ---")
+            print("1. Aggiungi Studente")
             print("2. Modifica Studente")
             print("3. Stampa Aula")
             print("4. Logout")
 
-            scelta = input("Scelta: ")
+            scelta = input("Scelta: ").strip()
 
             if scelta == "1":
                 self.aggiungi_studente()
@@ -30,72 +31,82 @@ class Utente:
             else:
                 print("Scelta non valida.")
 
-    # =========================
-    # METODI STUDENTI
-    # =========================
-
+    # AGGIUNGI STUDENTE
     def aggiungi_studente(self):
-        nome = input("Nome studente: ")
-        corso = input("Corso: ")
+        nome = input("Nome studente: ").strip()
+        corso = input("Corso: ").strip()
+
+        if not nome or not corso:
+            print("Nome e corso obbligatori.")
+            return
 
         studente = Studente(nome, corso)
+        file_path = os.path.join(os.path.dirname(__file__), "studenti.csv")
 
-        # a = aggiunge in coda
-        with open("studenti.csv", "a", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow(studente.to_list())
+        # scrittura semplice come testo
+        with open(file_path, "a", encoding="utf-8") as f:
+            f.write(f"{studente.nome},{studente.corso}\n")
 
-        print("Studente aggiunto.")
+        print("Studente aggiunto correttamente!")
 
+    # MODIFICA STUDENTE
     def modifica_studente(self):
-        nome_mod = input("Nome studente da modificare: ")
+        nome_mod = input("Nome studente da modificare: ").strip()
+        file_path = os.path.join(os.path.dirname(__file__), "studenti.csv")
 
-        if not os.path.exists("studenti.csv"):
+        if not os.path.exists(file_path):
             print("Nessun file studenti presente.")
             return
 
         studenti = []
-
-        # r = lettura
-        with open("studenti.csv", "r") as file:
-            reader = csv.reader(file)
-            for riga in reader:
-                studenti.append(Studente(riga[0], riga[1]))
+        with open(file_path, "r", encoding="utf-8") as f:
+            for riga in f:
+                riga = riga.strip()
+                if riga:
+                    parti = riga.split(",", 1)
+                    if len(parti) == 2:
+                        studenti.append(Studente(parti[0], parti[1]))
 
         trovato = False
-
         for studente in studenti:
-            if studente.nome == nome_mod:
-                studente.corso = input("Nuovo corso: ")
-                trovato = True
+            if studente.nome.lower() == nome_mod.lower():
+                nuovo_corso = input("Nuovo corso: ").strip()
+                if nuovo_corso:
+                    studente.corso = nuovo_corso
+                    trovato = True
 
         if trovato:
-            # w = sovrascrive
-            with open("studenti.csv", "w", newline="") as file:
-                writer = csv.writer(file)
-                for studente in studenti:
-                    writer.writerow(studente.to_list())
-
+            with open(file_path, "w", encoding="utf-8") as f:
+                for s in studenti:
+                    f.write(f"{s.nome},{s.corso}\n")
             print("Studente modificato.")
         else:
             print("Studente non trovato.")
 
+    # STAMPA AULA
     def stampa_aula(self):
-        if not os.path.exists("studenti.csv"):
+        file_path = os.path.join(os.path.dirname(__file__), "studenti.csv")
+
+        if not os.path.exists(file_path):
             print("Nessuno studente presente.")
             return
 
         studenti = []
+        with open(file_path, "r", encoding="utf-8") as f:
+            for riga in f:
+                riga = riga.strip()
+                if riga:
+                    parti = riga.split(",", 1)
+                    if len(parti) == 2:
+                        studenti.append(Studente(parti[0], parti[1]))
 
-        # r = lettura
-        with open("studenti.csv", "r") as file:
-            reader = csv.reader(file)
-            for riga in reader:
-                studenti.append(Studente(riga[0], riga[1]))
+        if not studenti:
+            print("Nessuno studente presente.")
+            return
 
-        # ordinamento per corso
+        # ordina per corso
         studenti.sort(key=lambda s: s.corso)
 
         print("\n--- LISTA AULA ORDINATA PER CORSO ---")
-        for studente in studenti:
-            print(studente)
+        for s in studenti:
+            print(s)
