@@ -1,11 +1,11 @@
 
-# REGISTRAZIONE / LOGIN
-
 import os
 from gestione_Utente import Utente
 from  gestione_Admin import Admin
 from gestione_Studente import Studente
 
+
+# REGISTRAZIONE
 def registrazione():
     nome = input("Inserisci nome: ")
     password = input("Inserisci password: ")
@@ -15,8 +15,8 @@ def registrazione():
 
     print("Registrazione completata.")
 
-
-def login():  
+## LOGIN
+def login(): 
     nome = input("Nome: ")
     password = input("Password: ")
 
@@ -34,7 +34,6 @@ def login():
 
     print("Credenziali errate.")
     return None
-
 
 
 # MAIN

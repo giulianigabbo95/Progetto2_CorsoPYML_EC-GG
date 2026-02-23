@@ -2,14 +2,14 @@
 # CLASSE UTENTE
 # =========================
 import os
-from gestione_Studente import Studente  # Studente deve avere to_list() e __str__()
+from gestione_Studente import Studente
 
 class Utente:
     def __init__(self, nome, password):
         self.nome = nome
         self.password = password
 
-    # MENU PRINCIPALE
+    # MENU PRINCIPALE utente
     def menu(self):
         while True:
             print("\n--- MENU UTENTE ---")

@@ -1,6 +1,4 @@
-# =========================
 # CLASSE STUDENTE
-# =========================
 
 class Studente:
     def __init__(self, nome, corso):
