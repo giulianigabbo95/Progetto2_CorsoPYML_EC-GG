@@ -27,6 +27,8 @@ Realizzare un programma che gestisca un file denominato studenti.txt e che imple
         - Può accedere direttamente al sistema tramite credenziali hardcoded.
         - Ha la possibilità di resettare completamente la lista degli studenti.
         - Ogni intervento di reset deve essere accompagnato da una motivazione, che verrà salvata nel file intervento_utente.txt.
+        
+In collaborazione con Elisabetta Carella
 '''
 from Utente import Utente
 
@@ -46,7 +48,7 @@ while True:
             new_user_nome = input("Inserisci Nome: ")
             new_user_pass = input("Inserisci Password: ")
             new_user = Utente(new_user_nome, new_user_pass)
-            if new_user.registraUtente(FILE_CREDENZIALI):
+            if new_user.registraUtente(FILE_CREDENZIALI) == True:
                 print("Utente Registrato!")
                 new_user.menuUtente()
             else:
